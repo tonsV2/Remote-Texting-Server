@@ -21,6 +21,10 @@ public class Contact {
 	@JsonManagedReference
 	private Set<PhoneNumber> phoneNumbers = new HashSet<>();
 
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "contact")
+	@JsonManagedReference
+	private Set<Message> messages = new HashSet<>();
+
 	public Long getId() {
 		return id;
 	}

@@ -1,8 +1,11 @@
 package dk.fitfit.remotetexting.business.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -14,6 +17,9 @@ public class PhoneNumber {
 	@ManyToOne
 	@JsonBackReference
 	private Contact contact;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "phoneNumber")
+	@JsonIgnore
+	private Set<Message> messages = new HashSet<>();
 
 	public Long getId() {
 		return id;
