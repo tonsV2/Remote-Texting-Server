@@ -1,10 +1,10 @@
 package dk.fitfit.remotetexting.business.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -14,6 +14,9 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String email;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonManagedReference
+	private Set<Contact> contacts = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -29,5 +32,9 @@ public class User {
 
 	public void setEmail(final String email) {
 		this.email = email;
+	}
+
+	public Set<Contact> getContacts() {
+		return contacts;
 	}
 }

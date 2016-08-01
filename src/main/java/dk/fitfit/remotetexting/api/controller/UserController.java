@@ -37,6 +37,7 @@ public class UserController {
 			UserResource userResource = new UserResource();
 			userResource.setId(user.getId());
 			userResource.setEmail(user.getEmail());
+			userResource.setContacts(user.getContacts());
 			userResources.add(userResource);
 		}
 		return userResources;
