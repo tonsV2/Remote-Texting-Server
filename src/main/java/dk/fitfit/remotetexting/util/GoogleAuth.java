@@ -26,6 +26,17 @@ public class GoogleAuth {
 		}
 	}
 
+	public static String getEmail(String idTokenString) throws GeneralSecurityException, IOException {
+		GoogleIdTokenVerifier verifier = getTokenVerifier();
+		GoogleIdToken idToken = verifier.verify(idTokenString);
+		if (idToken != null) {
+			GoogleIdToken.Payload payload = idToken.getPayload();
+			return payload.getEmail();
+		} else {
+			return null;
+		}
+	}
+
 	public static GoogleIdTokenVerifier getTokenVerifier() {
 		NetHttpTransport transport = new NetHttpTransport();
 		return new GoogleIdTokenVerifier.Builder(transport, new JacksonFactory())
