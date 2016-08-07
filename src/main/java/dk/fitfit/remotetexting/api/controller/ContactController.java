@@ -25,7 +25,6 @@ public class ContactController {
 
 	@RequestMapping(value = "/contacts", method = GET)
 	public List<ContactResource> getAll() {
-		log.info("getAll()");
 		Iterable<Contact> contacts = contactService.findAll();
 		ArrayList<ContactResource> resources = new ArrayList<>();
 		for (Contact contact : contacts) {

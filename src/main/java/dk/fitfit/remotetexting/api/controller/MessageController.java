@@ -31,7 +31,6 @@ public class MessageController {
 
 	@RequestMapping(value = "/messages", method = POST)
 	public ResponseEntity<Void> postMessage(@RequestBody MessageResource resource, @RequestParam String idToken) {
-		log.info("postMessage()");
 		Message message = new Message();
 		PhoneNumberResource fromResource = resource.getFrom();
 		PhoneNumber from = new PhoneNumber();
@@ -46,7 +45,6 @@ public class MessageController {
 
 	@RequestMapping(value = "/messages", method = GET)
 	public List<MessageResource> getAll() {
-		log.info("getAll()");
 		Iterable<Message> messages = messageService.findAll();
 		List<MessageResource> resources = new ArrayList<>();
 		for (Message message : messages) {

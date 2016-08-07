@@ -17,7 +17,6 @@ public class PhoneNumberService implements PhoneNumberServiceInterface {
 
 	@Override
 	public Iterable<PhoneNumber> findAll() {
-		log.info("findAll()");
 		return repository.findAll();
 	}
 

@@ -17,7 +17,6 @@ public class ContactService implements ContactServiceInterface {
 
 	@Override
 	public Iterable<Contact> findAll() {
-		log.info("findAll()");
 		return contactRepository.findAll();
 	}
 }

@@ -24,7 +24,6 @@ public class UserController {
 
 	@RequestMapping(value = "/users", method = GET)
 	public Iterable<UserResource> getAll() {
-		log.info("getAll()");
 		Iterable<User> users = userService.findAll();
 		ArrayList<UserResource> userResources = new ArrayList<>();
 		for (User user : users) {

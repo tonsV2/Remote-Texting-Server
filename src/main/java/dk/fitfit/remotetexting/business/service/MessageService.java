@@ -21,7 +21,6 @@ public class MessageService implements MessageServiceInterface {
 
 	@Override
 	public Iterable<Message> findAll() {
-		log.info("findAll()");
 		return messageRepository.findAll();
 	}
 

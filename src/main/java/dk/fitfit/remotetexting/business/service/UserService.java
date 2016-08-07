@@ -17,7 +17,6 @@ public class UserService implements UserServiceInterface {
 
 	@Override
 	public Iterable<User> findAll() {
-		log.info("findAll()");
 		return userRepository.findAll();
 	}
 }
