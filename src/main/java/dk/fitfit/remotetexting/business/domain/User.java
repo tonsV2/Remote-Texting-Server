@@ -14,6 +14,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String email;
+	private String sub;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonManagedReference
 	private Set<Contact> contacts = new HashSet<>();
@@ -32,6 +33,14 @@ public class User {
 
 	public void setEmail(final String email) {
 		this.email = email;
+	}
+
+	public String getSub() {
+		return sub;
+	}
+
+	public void setSub(final String sub) {
+		this.sub = sub;
 	}
 
 	public Set<Contact> getContacts() {

@@ -1,35 +1,19 @@
-package dk.fitfit.remotetexting.business.domain;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import javax.persistence.*;
+package dk.fitfit.remotetexting.api.resource;
 
 
-@Entity
-public class Message {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@ManyToOne
-	@JsonBackReference
-	private PhoneNumber from;
+import org.springframework.hateoas.ResourceSupport;
+
+public class MessageResource extends ResourceSupport {
+	private PhoneNumberResource from;
 	private String content;
 	private long timestampProvider;
 	private long timestampReceived;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(final Long id) {
-		this.id = id;
-	}
-
-	public PhoneNumber getFrom() {
+	public PhoneNumberResource getFrom() {
 		return from;
 	}
 
-	public void setFrom(final PhoneNumber from) {
+	public void setFrom(final PhoneNumberResource from) {
 		this.from = from;
 	}
 

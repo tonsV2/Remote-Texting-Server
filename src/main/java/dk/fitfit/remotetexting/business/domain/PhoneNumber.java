@@ -17,7 +17,7 @@ public class PhoneNumber {
 	@ManyToOne
 	@JsonBackReference
 	private Contact contact;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "phoneNumber")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "from")
 	@JsonIgnore
 	private Set<Message> messages = new HashSet<>();
 

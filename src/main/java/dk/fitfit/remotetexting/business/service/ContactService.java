@@ -1,7 +1,7 @@
 package dk.fitfit.remotetexting.business.service;
 
-import dk.fitfit.remotetexting.business.domain.User;
-import dk.fitfit.remotetexting.business.repository.UserRepository;
+import dk.fitfit.remotetexting.business.domain.Contact;
+import dk.fitfit.remotetexting.business.repository.ContactRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserService implements UserServiceInterface {
+public class ContactService implements ContactServiceInterface {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private UserRepository userRepository;
+	private ContactRepository contactRepository;
 
 	@Override
-	public Iterable<User> findAll() {
+	public Iterable<Contact> findAll() {
 		log.info("findAll()");
-		return userRepository.findAll();
+		return contactRepository.findAll();
 	}
 }

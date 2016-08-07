@@ -6,17 +6,8 @@ import dk.fitfit.remotetexting.business.domain.Contact;
 import java.util.Set;
 
 public class UserResource {
-	private Long id;
 	private String email;
 	private Set<Contact> contacts;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(final Long id) {
-		this.id = id;
-	}
 
 	public String getEmail() {
 		return email;

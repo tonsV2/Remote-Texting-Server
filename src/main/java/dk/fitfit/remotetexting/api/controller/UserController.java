@@ -20,22 +20,15 @@ public class UserController {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private UserServiceInterface userServiceInterface;
-
-//	@RequestMapping(value = "/pages/{id}", method = GET)
-//	public Page getPage(@PathVariable Long id) {
-//		log.info("getPage({})", id);
-//		return userServiceInterface.findOne(id);
-//	}
+	private UserServiceInterface userService;
 
 	@RequestMapping(value = "/users", method = GET)
 	public Iterable<UserResource> getAll() {
 		log.info("getAll()");
-		Iterable<User> users = userServiceInterface.findAll();
+		Iterable<User> users = userService.findAll();
 		ArrayList<UserResource> userResources = new ArrayList<>();
 		for (User user : users) {
 			UserResource userResource = new UserResource();
-			userResource.setId(user.getId());
 			userResource.setEmail(user.getEmail());
 			userResource.setContacts(user.getContacts());
 			userResources.add(userResource);
