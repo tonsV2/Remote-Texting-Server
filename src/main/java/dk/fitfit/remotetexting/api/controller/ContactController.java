@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +24,7 @@ public class ContactController {
 	private ContactServiceInterface contactService;
 
 	@RequestMapping(value = "/contacts", method = GET)
-	public List<ContactResource> getAll() throws GeneralSecurityException, IOException {
+	public List<ContactResource> getAll() {
 		log.info("getAll()");
 		Iterable<Contact> contacts = contactService.findAll();
 		ArrayList<ContactResource> resources = new ArrayList<>();
