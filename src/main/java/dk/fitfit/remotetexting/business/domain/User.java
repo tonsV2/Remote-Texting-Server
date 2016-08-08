@@ -14,10 +14,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String email;
-	private String sub;
+	private String userId;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonManagedReference
 	private Set<Contact> contacts = new HashSet<>();
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonManagedReference
+	private Set<PhoneNumber> phoneNumbers = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -35,15 +38,19 @@ public class User {
 		this.email = email;
 	}
 
-	public String getSub() {
-		return sub;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setSub(final String sub) {
-		this.sub = sub;
+	public void setUserId(final String userId) {
+		this.userId = userId;
 	}
 
 	public Set<Contact> getContacts() {
 		return contacts;
+	}
+
+	public Set<PhoneNumber> getPhoneNumbers() {
+		return phoneNumbers;
 	}
 }

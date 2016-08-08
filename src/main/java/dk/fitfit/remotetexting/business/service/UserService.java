@@ -19,4 +19,19 @@ public class UserService implements UserServiceInterface {
 	public Iterable<User> findAll() {
 		return userRepository.findAll();
 	}
+
+	// TODO: Should this method be called findOrCreateUserById?
+	@Override
+	public User findByUserId(String userId) {
+		return userRepository.findByUserId(userId);
+	}
+
+	@Override
+	public User create(final String userId, final String email) {
+		User user = new User();
+		user.setUserId(userId);
+		user.setEmail(email);
+		userRepository.save(user);
+		return user;
+	}
 }

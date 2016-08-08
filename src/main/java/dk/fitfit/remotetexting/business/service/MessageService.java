@@ -25,7 +25,7 @@ public class MessageService implements MessageServiceInterface {
 	}
 
 	@Override
-	public Message save(Message message) {
+	public Message save(final Message message) {
 		PhoneNumber from = phoneNumberService.findByNumber(message.getFrom().getNumber());
 		if (from == null) {
 			from = message.getFrom();
@@ -33,5 +33,12 @@ public class MessageService implements MessageServiceInterface {
 		}
 		message.setFrom(from);
 		return messageRepository.save(message);
+	}
+
+	@Override
+	public void sent(final Long id) {
+		Message message = messageRepository.findOne(id);
+//		message.sent(true);
+		messageRepository.save(message);
 	}
 }

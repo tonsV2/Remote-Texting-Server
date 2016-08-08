@@ -20,6 +20,9 @@ public class PhoneNumber {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "from")
 	@JsonIgnore
 	private Set<Message> messages = new HashSet<>();
+	@ManyToOne
+	@JsonBackReference
+	private User user;
 
 	public Long getId() {
 		return id;
@@ -43,5 +46,13 @@ public class PhoneNumber {
 
 	public void setContact(final Contact contact) {
 		this.contact = contact;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(final User user) {
+		this.user = user;
 	}
 }
