@@ -87,6 +87,7 @@ public class MessageController {
 		return ResponseEntity.ok().build();
 	}
 
+// TODO: https://stackoverflow.com/questions/15609105/how-to-save-the-delivery-status-of-sms-in-default-sms-table-in-android
 	@RequestMapping(value = "/messages/{id}/received", method = PUT)
 	public ResponseEntity<Void> received(@PathVariable long id, @RequestParam String idToken) {
 //		messageService.received(id);
