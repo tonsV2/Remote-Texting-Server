@@ -20,19 +20,14 @@ public class MessageService implements MessageServiceInterface {
 	private PhoneNumberServiceInterface phoneNumberService;
 
 	@Override
-	public Iterable<Message> findAll() {
-		return messageRepository.findAll();
-	}
-
-	@Override
-	public Message save(final Message message) {
+	public void save(final Message message) {
 		PhoneNumber from = phoneNumberService.findByNumber(message.getFrom().getNumber());
 		if (from == null) {
 			from = message.getFrom();
 			phoneNumberService.save(from);
 		}
 		message.setFrom(from);
-		return messageRepository.save(message);
+		messageRepository.save(message);
 	}
 
 	@Override

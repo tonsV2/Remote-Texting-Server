@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Iterator;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -39,7 +40,7 @@ public class MessageController {
 //	@RequestMapping(value = "/users/{userId}/phoneNumbers/{phoneNumberId}/messages", method = GET)
 	@RequestMapping(value = "/phoneNumbers/{phoneNumberId}/messages", method = GET)
 	//public List<MessageResource> getByUserAndPhoneNumber(@PathVariable long userId, @PathVariable long phoneNumberId) {
-	public Iterable<MessageResource> getByPhoneNumber(@PathVariable long phoneNumberId) {
+	public Iterator<MessageResource> getByPhoneNumber(@PathVariable long phoneNumberId) {
 		Iterable<Message> messages = messageService.findBy(phoneNumberId);
 		return messageResourceAssembler.toResources(messages);
 	}
@@ -71,12 +72,6 @@ public class MessageController {
 			user = userService.create(userId, email);
 		}
 		return user;
-	}
-
-	@RequestMapping(value = "/messages", method = GET)
-	public Iterable<MessageResource> getAll() {
-		Iterable<Message> messages = messageService.findAll();
-		return messageResourceAssembler.toResources(messages);
 	}
 
 	@RequestMapping(value = "/messages/{id}/sent", method = PUT)
