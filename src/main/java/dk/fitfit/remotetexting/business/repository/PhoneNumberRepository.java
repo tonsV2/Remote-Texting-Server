@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PhoneNumberRepository extends CrudRepository<PhoneNumber, Long> {
 	PhoneNumber findByNumber(String number);
+	Iterable<PhoneNumber> findByUserId(long userId);
 }

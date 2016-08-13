@@ -17,9 +17,6 @@ public class User {
 	private String userId;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonManagedReference
-	private Set<Contact> contacts = new HashSet<>();
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-	@JsonManagedReference
 	private Set<PhoneNumber> phoneNumbers = new HashSet<>();
 
 	public Long getId() {
@@ -44,10 +41,6 @@ public class User {
 
 	public void setUserId(final String userId) {
 		this.userId = userId;
-	}
-
-	public Set<Contact> getContacts() {
-		return contacts;
 	}
 
 	public Set<PhoneNumber> getPhoneNumbers() {
