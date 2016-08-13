@@ -2,6 +2,7 @@ package dk.fitfit.remotetexting.api.resource;
 
 import org.springframework.hateoas.ResourceSupport;
 
+
 public class PhoneNumberResource extends ResourceSupport {
 	private String number;
 	private ContactResource contact;

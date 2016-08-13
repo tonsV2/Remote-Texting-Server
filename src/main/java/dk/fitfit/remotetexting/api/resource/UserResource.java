@@ -1,6 +1,5 @@
 package dk.fitfit.remotetexting.api.resource;
 
-
 import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Set;
