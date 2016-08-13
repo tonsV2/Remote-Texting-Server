@@ -39,6 +39,12 @@ public class MessageService implements MessageServiceInterface {
 	public void sent(final Long id) {
 		Message message = messageRepository.findOne(id);
 //		message.sent(true);
+//		store timestamp
 		messageRepository.save(message);
+	}
+
+	@Override
+	public Iterable<Message> findBy(final long phoneNumberId) {
+		return messageRepository.findByFromId(phoneNumberId);
 	}
 }
