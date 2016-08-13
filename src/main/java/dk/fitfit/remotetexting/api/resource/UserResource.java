@@ -1,14 +1,19 @@
 package dk.fitfit.remotetexting.api.resource;
 
 
-import dk.fitfit.remotetexting.business.domain.PhoneNumber;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Set;
 
 
-public class UserResource {
+public class UserResource extends ResourceSupport {
 	private String email;
-	private Set<PhoneNumber> phoneNumbers;
+	private Iterable<PhoneNumberResource> phoneNumbers;
+
+	protected UserResource(final String email, final Iterable<PhoneNumberResource> phoneNumbers) {
+		this.email = email;
+		this.phoneNumbers = phoneNumbers;
+	}
 
 	public String getEmail() {
 		return email;
@@ -18,11 +23,11 @@ public class UserResource {
 		this.email = email;
 	}
 
-	public Set<PhoneNumber> getPhoneNumbers() {
+	public Iterable<PhoneNumberResource> getPhoneNumbers() {
 		return phoneNumbers;
 	}
 
-	public void setPhoneNumbers(final Set<PhoneNumber> phoneNumbers) {
+	public void setPhoneNumbers(final Set<PhoneNumberResource> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
 	}
 }

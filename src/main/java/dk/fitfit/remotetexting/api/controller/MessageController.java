@@ -2,6 +2,7 @@ package dk.fitfit.remotetexting.api.controller;
 
 import dk.fitfit.remotetexting.api.resource.MessageResource;
 import dk.fitfit.remotetexting.api.resource.PhoneNumberResource;
+import dk.fitfit.remotetexting.api.resource.assembler.MessageResourceAssembler;
 import dk.fitfit.remotetexting.business.domain.Message;
 import dk.fitfit.remotetexting.business.domain.PhoneNumber;
 import dk.fitfit.remotetexting.business.domain.User;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -34,24 +33,15 @@ public class MessageController {
 	@Autowired
 	private MessageServiceInterface messageService;
 
+	@Autowired
+	private MessageResourceAssembler messageResourceAssembler;
+
 //	@RequestMapping(value = "/users/{userId}/phoneNumbers/{phoneNumberId}/messages", method = GET)
 	@RequestMapping(value = "/phoneNumbers/{phoneNumberId}/messages", method = GET)
 	//public List<MessageResource> getByUserAndPhoneNumber(@PathVariable long userId, @PathVariable long phoneNumberId) {
-	public List<MessageResource> getByPhoneNumber(@PathVariable long phoneNumberId) {
+	public Iterable<MessageResource> getByPhoneNumber(@PathVariable long phoneNumberId) {
 		Iterable<Message> messages = messageService.findBy(phoneNumberId);
-		List<MessageResource> resources = new ArrayList<>();
-		for (Message message : messages) {
-			MessageResource resource = new MessageResource();
-			PhoneNumber from = message.getFrom();
-			PhoneNumberResource fromResource = new PhoneNumberResource();
-			fromResource.setNumber(from.getNumber());
-			resource.setFrom(fromResource);
-			resource.setContent(message.getContent());
-			resource.setTimestampProvider(message.getTimestampProvider());
-			resource.setTimestampReceived(message.getTimestampReceived());
-			resources.add(resource);
-		}
-		return resources;
+		return messageResourceAssembler.toResources(messages);
 	}
 
 	@RequestMapping(value = "/messages", method = POST)
@@ -84,21 +74,9 @@ public class MessageController {
 	}
 
 	@RequestMapping(value = "/messages", method = GET)
-	public List<MessageResource> getAll() {
+	public Iterable<MessageResource> getAll() {
 		Iterable<Message> messages = messageService.findAll();
-		List<MessageResource> resources = new ArrayList<>();
-		for (Message message : messages) {
-			MessageResource resource = new MessageResource();
-			PhoneNumber from = message.getFrom();
-			PhoneNumberResource fromResource = new PhoneNumberResource();
-			fromResource.setNumber(from.getNumber());
-			resource.setFrom(fromResource);
-			resource.setContent(message.getContent());
-			resource.setTimestampProvider(message.getTimestampProvider());
-			resource.setTimestampReceived(message.getTimestampReceived());
-			resources.add(resource);
-		}
-		return resources;
+		return messageResourceAssembler.toResources(messages);
 	}
 
 	@RequestMapping(value = "/messages/{id}/sent", method = PUT)
