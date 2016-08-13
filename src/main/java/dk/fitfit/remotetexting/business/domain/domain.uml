@@ -2,12 +2,47 @@
 <Diagram>
   <ID>JAVA</ID>
   <OriginalElement />
-  <nodes />
+  <nodes>
+    <node x="-474.0" y="-100.0">dk.fitfit.remotetexting.business.domain.Contact</node>
+    <node x="-211.0" y="-102.0">dk.fitfit.remotetexting.business.domain.PhoneNumber</node>
+    <node x="-248.0" y="-327.0">dk.fitfit.remotetexting.business.domain.Message</node>
+    <node x="37.0" y="-105.0">dk.fitfit.remotetexting.business.domain.User</node>
+  </nodes>
   <notes />
-  <edges />
-  <settings layout="Hierarchic Group" zoom="1.0" x="0.0" y="0.0" />
-  <SelectedNodes />
-  <Categories />
+  <edges>
+    <edge source="dk.fitfit.remotetexting.business.domain.Contact" target="dk.fitfit.remotetexting.business.domain.PhoneNumber">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="dk.fitfit.remotetexting.business.domain.User" target="dk.fitfit.remotetexting.business.domain.PhoneNumber">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="dk.fitfit.remotetexting.business.domain.PhoneNumber" target="dk.fitfit.remotetexting.business.domain.User">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="dk.fitfit.remotetexting.business.domain.PhoneNumber" target="dk.fitfit.remotetexting.business.domain.Message">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="dk.fitfit.remotetexting.business.domain.Message" target="dk.fitfit.remotetexting.business.domain.PhoneNumber">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="dk.fitfit.remotetexting.business.domain.PhoneNumber" target="dk.fitfit.remotetexting.business.domain.Contact">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="-107.0" y="-139.0" />
+  <SelectedNodes>
+    <node>dk.fitfit.remotetexting.business.domain.User</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Properties</Category>
+  </Categories>
   <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
 </Diagram>
 
