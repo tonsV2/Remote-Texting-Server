@@ -34,6 +34,26 @@ public class MessageController {
 	@Autowired
 	private MessageServiceInterface messageService;
 
+//	@RequestMapping(value = "/users/{userId}/phoneNumbers/{phoneNumberId}/messages", method = GET)
+	@RequestMapping(value = "/phoneNumbers/{phoneNumberId}/messages", method = GET)
+	//public List<MessageResource> getByUserAndPhoneNumber(@PathVariable long userId, @PathVariable long phoneNumberId) {
+	public List<MessageResource> getByPhoneNumber(@PathVariable long phoneNumberId) {
+		Iterable<Message> messages = messageService.findBy(phoneNumberId);
+		List<MessageResource> resources = new ArrayList<>();
+		for (Message message : messages) {
+			MessageResource resource = new MessageResource();
+			PhoneNumber from = message.getFrom();
+			PhoneNumberResource fromResource = new PhoneNumberResource();
+			fromResource.setNumber(from.getNumber());
+			resource.setFrom(fromResource);
+			resource.setContent(message.getContent());
+			resource.setTimestampProvider(message.getTimestampProvider());
+			resource.setTimestampReceived(message.getTimestampReceived());
+			resources.add(resource);
+		}
+		return resources;
+	}
+
 	@RequestMapping(value = "/messages", method = POST)
 	public ResponseEntity<Void> postMessage(@RequestBody MessageResource resource, @RequestParam String idToken) throws GeneralSecurityException, IOException {
 		if (GoogleAuth.getUserId(idToken) == null) {
