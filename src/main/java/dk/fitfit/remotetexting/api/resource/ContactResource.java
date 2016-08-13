@@ -1,15 +1,17 @@
 package dk.fitfit.remotetexting.api.resource;
 
 
-import dk.fitfit.remotetexting.business.domain.PhoneNumber;
 import org.springframework.hateoas.ResourceSupport;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collection;
 
 public class ContactResource extends ResourceSupport {
 	private String name;
-	private Set<PhoneNumber> phoneNumbers = new HashSet<>();
+	private Collection<PhoneNumberResource> phoneNumbers;
+
+	protected ContactResource(final String name) {
+		this.name = name;
+	}
 
 	public String getName() {
 		return name;
@@ -19,11 +21,11 @@ public class ContactResource extends ResourceSupport {
 		this.name = name;
 	}
 
-	public Set<PhoneNumber> getPhoneNumbers() {
+	public Collection<PhoneNumberResource> getPhoneNumbers() {
 		return phoneNumbers;
 	}
 
-	public void setPhoneNumbers(final Set<PhoneNumber> phoneNumbers) {
+	public void setPhoneNumbers(final Collection<PhoneNumberResource> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
 	}
 }

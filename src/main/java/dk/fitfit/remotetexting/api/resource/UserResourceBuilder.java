@@ -1,8 +1,11 @@
 package dk.fitfit.remotetexting.api.resource;
 
+import org.apache.commons.lang3.builder.Builder;
+
 import java.util.Collection;
 
-public class UserResourceBuilder {
+
+public class UserResourceBuilder implements Builder<UserResource> {
 	private String email;
 	private Collection<PhoneNumberResource> phoneNumbers;
 
@@ -16,6 +19,7 @@ public class UserResourceBuilder {
 		return this;
 	}
 
+	@Override
 	public UserResource build() {
 		return new UserResource(email, phoneNumbers);
 	}

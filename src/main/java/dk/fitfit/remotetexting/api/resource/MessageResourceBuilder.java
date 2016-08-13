@@ -1,6 +1,9 @@
 package dk.fitfit.remotetexting.api.resource;
 
-public class MessageResourceBuilder {
+import org.apache.commons.lang3.builder.Builder;
+
+
+public class MessageResourceBuilder implements Builder<MessageResource> {
 	private PhoneNumberResource from;
 	private String content;
 	private long timestampProvider;
@@ -26,6 +29,7 @@ public class MessageResourceBuilder {
 		return this;
 	}
 
+	@Override
 	public MessageResource build() {
 		return new MessageResource(from, content, timestampProvider, timestampReceived);
 	}
