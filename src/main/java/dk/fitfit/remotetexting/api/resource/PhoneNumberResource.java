@@ -6,6 +6,10 @@ public class PhoneNumberResource extends ResourceSupport {
 	private String number;
 	private ContactResource contact;
 
+	protected PhoneNumberResource(final String number) {
+		this.number = number;
+	}
+
 	public String getNumber() {
 		return number;
 	}

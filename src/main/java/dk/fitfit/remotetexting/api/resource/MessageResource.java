@@ -9,6 +9,13 @@ public class MessageResource extends ResourceSupport {
 	private long timestampProvider;
 	private long timestampReceived;
 
+	protected MessageResource(final PhoneNumberResource from, final String content, final long timestampProvider, final long timestampReceived) {
+		this.from = from;
+		this.content = content;
+		this.timestampProvider = timestampProvider;
+		this.timestampReceived = timestampReceived;
+	}
+
 	public PhoneNumberResource getFrom() {
 		return from;
 	}
