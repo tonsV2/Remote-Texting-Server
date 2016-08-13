@@ -29,4 +29,9 @@ public class PhoneNumberService implements PhoneNumberServiceInterface {
 	public PhoneNumber findByNumber(final String number) {
 		return repository.findByNumber(number);
 	}
+
+	@Override
+	public Iterable<PhoneNumber> findByUser(final long userId) {
+		return repository.findByUserId(userId);
+	}
 }

@@ -35,10 +35,21 @@ public class PersistenceConfig {
 		}
 	}
 
-//	@Primary
+	@Primary
 	@Bean
 	public Database mysqlDataBase() {
 		return Database.MYSQL;
+	}
+
+	@Primary
+	@Bean
+	public DataSource localMysqlDataSource() {
+		DriverManagerDataSource driver = new DriverManagerDataSource();
+		driver.setDriverClassName("com.mysql.jdbc.Driver");
+		driver.setUrl("jdbc:mysql://localhost/remotetexting?useSSL=false");
+		driver.setUsername("tons");
+		driver.setPassword("");
+		return driver;
 	}
 
 //	@Primary
@@ -52,13 +63,13 @@ public class PersistenceConfig {
 		return driver;
 	}
 
-	@Primary
+//	@Primary
 	@Bean
 	public Database postgresqlDataBase() {
 		return Database.POSTGRESQL;
 	}
 
-	@Primary
+//	@Primary
 	@Bean
 	public DataSource postgresqlDataSource() {
 		DriverManagerDataSource driver = new DriverManagerDataSource();

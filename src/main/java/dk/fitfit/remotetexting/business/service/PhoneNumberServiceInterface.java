@@ -7,4 +7,5 @@ public interface PhoneNumberServiceInterface {
 	Iterable<PhoneNumber> findAll();
 	PhoneNumber save(PhoneNumber number);
 	PhoneNumber findByNumber(String number);
+	Iterable<PhoneNumber> findByUser(long userId);
 }

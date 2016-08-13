@@ -1,13 +1,14 @@
 package dk.fitfit.remotetexting.api.resource;
 
 
-import dk.fitfit.remotetexting.business.domain.Contact;
+import dk.fitfit.remotetexting.business.domain.PhoneNumber;
 
 import java.util.Set;
 
+
 public class UserResource {
 	private String email;
-	private Set<Contact> contacts;
+	private Set<PhoneNumber> phoneNumbers;
 
 	public String getEmail() {
 		return email;
@@ -17,11 +18,11 @@ public class UserResource {
 		this.email = email;
 	}
 
-	public Set<Contact> getContacts() {
-		return contacts;
+	public Set<PhoneNumber> getPhoneNumbers() {
+		return phoneNumbers;
 	}
 
-	public void setContacts(final Set<Contact> contacts) {
-		this.contacts = contacts;
+	public void setPhoneNumbers(final Set<PhoneNumber> phoneNumbers) {
+		this.phoneNumbers = phoneNumbers;
 	}
 }

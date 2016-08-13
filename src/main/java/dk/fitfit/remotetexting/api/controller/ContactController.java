@@ -30,7 +30,6 @@ public class ContactController {
 		for (Contact contact : contacts) {
 			ContactResource resource = new ContactResource();
 			resource.setName(contact.getName());
-			resource.setUser(contact.getUser());
 			resource.setPhoneNumbers(contact.getPhoneNumbers());
 			resources.add(resource);
 		}
