@@ -1,7 +1,9 @@
 package dk.fitfit.remotetexting.api.controller;
 
 import dk.fitfit.remotetexting.api.resource.MessageResource;
+import dk.fitfit.remotetexting.api.resource.MessageResourceContainer;
 import dk.fitfit.remotetexting.api.resource.assembler.MessageResourceAssembler;
+import dk.fitfit.remotetexting.api.resource.assembler.MessageResourceContainerAssembler;
 import dk.fitfit.remotetexting.business.domain.Message;
 import dk.fitfit.remotetexting.business.domain.User;
 import dk.fitfit.remotetexting.business.service.MessageServiceInterface;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Iterator;
 
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -35,12 +36,15 @@ public class MessageController {
 	@Autowired
 	private MessageResourceAssembler messageResourceAssembler;
 
+	@Autowired
+	private MessageResourceContainerAssembler messageResourceContainerAssembler;
+
 //	@RequestMapping(value = "/users/{userId}/phoneNumbers/{phoneNumberId}/messages", method = GET)
 	@RequestMapping(value = "/phoneNumbers/{phoneNumberId}/messages", method = GET)
 	//public List<MessageResource> getByUserAndPhoneNumber(@PathVariable long userId, @PathVariable long phoneNumberId) {
-	public Iterator<MessageResource> getByPhoneNumber(@PathVariable long phoneNumberId) {
+	public MessageResourceContainer getByPhoneNumber(@PathVariable long phoneNumberId) {
 		Iterable<Message> messages = messageService.findBy(phoneNumberId);
-		return messageResourceAssembler.toResources(messages);
+		return messageResourceContainerAssembler.toResource(messages);
 	}
 
 	@RequestMapping(value = "/messages", method = POST)

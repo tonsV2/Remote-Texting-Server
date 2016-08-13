@@ -16,12 +16,12 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 public class PhoneNumberResourceLinksAssembler implements ResourceLinksAssemblerInterface<PhoneNumber> {
 	@Override
 	public List<Link> getLinks(final PhoneNumber entity) {
-		return Lists.newArrayList(new MessagesLink(entity.getId()));
+		return Lists.newArrayList(new MessagesLink(entity));
 	}
 
 	static class MessagesLink extends Link {
-		public MessagesLink(final Long id) {
-			super("messages", linkTo(methodOn(MessageController.class).getByPhoneNumber(id)).toString());
+		public MessagesLink(final PhoneNumber phoneNumber) {
+			super("messages", linkTo(methodOn(MessageController.class).getByPhoneNumber(phoneNumber.getId())).toString());
 		}
 	}
 
