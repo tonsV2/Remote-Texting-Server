@@ -34,9 +34,11 @@ public class PhoneNumberController {
 			PhoneNumberResource phoneNumberResource = new PhoneNumberResource();
 			phoneNumberResource.setNumber(phoneNumber.getNumber());
 			Contact contact = phoneNumber.getContact();
-			ContactResource contactResource = new ContactResource();
-			contactResource.setName(contact.getName());
-			phoneNumberResource.setContact(contactResource);
+			if(contact != null) {
+				ContactResource contactResource = new ContactResource();
+				contactResource.setName(contact.getName());
+				phoneNumberResource.setContact(contactResource);
+			}
 			phoneNumberResources.add(phoneNumberResource);
 		}
 		return phoneNumberResources;
