@@ -1,10 +1,8 @@
 package dk.fitfit.remotetexting.api.controller;
 
 import dk.fitfit.remotetexting.api.resource.MessageResource;
-import dk.fitfit.remotetexting.api.resource.PhoneNumberResource;
 import dk.fitfit.remotetexting.api.resource.assembler.MessageResourceAssembler;
 import dk.fitfit.remotetexting.business.domain.Message;
-import dk.fitfit.remotetexting.business.domain.PhoneNumber;
 import dk.fitfit.remotetexting.business.domain.User;
 import dk.fitfit.remotetexting.business.service.MessageServiceInterface;
 import dk.fitfit.remotetexting.business.service.UserServiceInterface;
@@ -12,7 +10,6 @@ import dk.fitfit.remotetexting.util.GoogleAuth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +17,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Iterator;
 
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 
@@ -48,18 +46,11 @@ public class MessageController {
 	@RequestMapping(value = "/messages", method = POST)
 	public ResponseEntity<Void> postMessage(@RequestBody MessageResource resource, @RequestParam String idToken) throws GeneralSecurityException, IOException {
 		if (GoogleAuth.getUserId(idToken) == null) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			return ResponseEntity.status(UNAUTHORIZED).build();
 		}
 		User user = getUser(idToken);
-		Message message = new Message();
-		PhoneNumberResource phoneNumberResource = resource.getFrom();
-		PhoneNumber phoneNumber = new PhoneNumber();
-		phoneNumber.setNumber(phoneNumberResource.getNumber());
-		phoneNumber.setUser(user);
-		message.setFrom(phoneNumber);
-		message.setContent(resource.getContent());
-		message.setTimestampProvider(resource.getTimestampProvider());
-		message.setTimestampReceived(resource.getTimestampReceived());
+		Message message = messageResourceAssembler.toEntity(resource);
+		message.getFrom().setUser(user);
 		messageService.save(message);
 		return ResponseEntity.ok().build();
 	}

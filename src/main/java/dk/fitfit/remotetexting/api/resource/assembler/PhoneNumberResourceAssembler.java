@@ -36,4 +36,10 @@ public class PhoneNumberResourceAssembler implements ResourceAssembler<PhoneNumb
 	public Collection<PhoneNumberResource> toResources(final Set<PhoneNumber> phoneNumbers) {
 		return Collections2.transform(phoneNumbers, this::toResource);
 	}
+
+	public PhoneNumber toEntity(final PhoneNumberResource phoneNumberResource) {
+		PhoneNumber phoneNumber = new PhoneNumber();
+		phoneNumber.setNumber(phoneNumberResource.getNumber());
+		return phoneNumber;
+	}
 }
