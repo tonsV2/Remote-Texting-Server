@@ -1,6 +1,5 @@
 package dk.fitfit.remotetexting.api.resource.assembler;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import dk.fitfit.remotetexting.api.resource.MessageResource;
 import dk.fitfit.remotetexting.api.resource.MessageResourceBuilder;
@@ -10,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nullable;
+import java.util.Iterator;
 
 
 @Component
@@ -29,14 +28,7 @@ public class MessageResourceAssembler  implements ResourceAssembler<Message, Mes
 				.build();
 	}
 
-	public Iterable<MessageResource> toResources(final Iterable<Message> messages) {
-		return Iterables.transform(messages, new Function<Message, MessageResource>() {
-			@Nullable
-			@Override
-			public MessageResource apply(final Message message) {
-				return toResource(message);
-			}
-		});
+	public Iterator<MessageResource> toResources(final Iterable<Message> messages) {
+		return Iterables.transform(messages, this::toResource).iterator();
 	}
-
 }
