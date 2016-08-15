@@ -1,6 +1,7 @@
 package dk.fitfit.remotetexting.api.controller;
 
 import dk.fitfit.remotetexting.api.resource.MessageResource;
+import dk.fitfit.remotetexting.api.resource.MessageResourceBuilder;
 import dk.fitfit.remotetexting.api.resource.MessageResourceContainer;
 import dk.fitfit.remotetexting.api.resource.assembler.MessageResourceAssembler;
 import dk.fitfit.remotetexting.api.resource.assembler.MessageResourceContainerAssembler;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
+import static org.springframework.http.HttpStatus.NOT_IMPLEMENTED;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -45,6 +47,16 @@ public class MessageController {
 	public MessageResourceContainer getByPhoneNumber(@PathVariable long phoneNumberId) {
 		Iterable<Message> messages = messageService.findBy(phoneNumberId);
 		return messageResourceContainerAssembler.toResource(messages);
+	}
+
+	@RequestMapping(value = "/messages/prototype", method = GET)
+	public MessageResource getPrototype() {
+		return new MessageResourceBuilder().build();
+	}
+
+	@RequestMapping(value = "/messages/send", method = POST)
+	public ResponseEntity<Void> sendMessage(@RequestBody MessageResource resource)  {
+		return ResponseEntity.status(NOT_IMPLEMENTED).build();
 	}
 
 	@RequestMapping(value = "/messages", method = POST)
