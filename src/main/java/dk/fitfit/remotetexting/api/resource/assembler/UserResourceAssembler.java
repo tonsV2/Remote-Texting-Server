@@ -21,6 +21,9 @@ public class UserResourceAssembler implements ResourceAssembler<User, UserResour
 
 	@Override
 	public UserResource toResource(final User user) {
+		if (user == null) {
+			return null;
+		}
 		Set<PhoneNumber> phoneNumbers = user.getPhoneNumbers();
 		Collection<PhoneNumberResource> phoneNumberResources = phoneNumberResourceAssembler.toResources(phoneNumbers);
 		return new UserResourceBuilder()
