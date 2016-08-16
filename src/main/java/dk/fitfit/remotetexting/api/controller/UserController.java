@@ -3,7 +3,6 @@ package dk.fitfit.remotetexting.api.controller;
 import dk.fitfit.remotetexting.api.resource.UserResource;
 import dk.fitfit.remotetexting.api.resource.assembler.UserResourceAssembler;
 import dk.fitfit.remotetexting.business.domain.User;
-import dk.fitfit.remotetexting.business.service.UserServiceInterface;
 import dk.fitfit.remotetexting.util.CurrentUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,19 +22,11 @@ public class UserController {
 	private CurrentUser currentUser;
 
 	@Autowired
-	private UserServiceInterface userService;
-
-	@Autowired
 	private UserResourceAssembler userResourceAssembler;
 
 	@RequestMapping(value = "/users", method = GET)
 	public UserResource getUser() {
-		String sub = currentUser.getSub();
-		User user = userService.findByUserId(sub);
-		if (user == null) {
-			String email = currentUser.getEmail();
-			userService.create(sub, email);
-		}
+		User user = currentUser.getUser();
 		return userResourceAssembler.toResource(user);
 	}
 
