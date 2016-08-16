@@ -14,6 +14,7 @@ import java.util.Collections;
 
 @Component
 public class GoogleAuth {
+	// TODO: http://tuhrig.de/why-using-springs-value-annotation-is-bad/
 	@Value("${security.oauth2.client.clientId}")
 	private String clientId;
 
