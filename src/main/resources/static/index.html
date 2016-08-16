@@ -16,9 +16,9 @@
 		<script type="text/javascript">
 			angular.module("app", []).controller("home", function($http) {
 				var self = this;
-				$http.get("/api/user").success(function(data) {
+				$http.get("/api/users").success(function(data) {
 					console.log(data);
-					self.user = data.name;
+					self.user = data.email;
 					self.authenticated = true;
 				}).error(function() {
 					self.user = "N/A";
