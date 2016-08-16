@@ -30,6 +30,9 @@ public class MessageController {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
+	private GoogleAuth googleAuth;
+
+	@Autowired
 	private UserServiceInterface userService;
 
 	@Autowired
@@ -41,9 +44,8 @@ public class MessageController {
 	@Autowired
 	private MessageResourceContainerAssembler messageResourceContainerAssembler;
 
-//	@RequestMapping(value = "/users/{userId}/phoneNumbers/{phoneNumberId}/messages", method = GET)
+	// TODO: Ensure that a user only can get back it's own messages!!!
 	@RequestMapping(value = "/phoneNumbers/{phoneNumberId}/messages", method = GET)
-	//public List<MessageResource> getByUserAndPhoneNumber(@PathVariable long userId, @PathVariable long phoneNumberId) {
 	public MessageResourceContainer getByPhoneNumber(@PathVariable long phoneNumberId) {
 		Iterable<Message> messages = messageService.findBy(phoneNumberId);
 		return messageResourceContainerAssembler.toResource(messages);
@@ -61,7 +63,7 @@ public class MessageController {
 
 	@RequestMapping(value = "/messages", method = POST)
 	public ResponseEntity<Void> postMessage(@RequestBody MessageResource resource, @RequestParam String idToken) throws GeneralSecurityException, IOException {
-		if (GoogleAuth.getUserId(idToken) == null) {
+		if (googleAuth.getUserId(idToken) == null) {
 			return ResponseEntity.status(UNAUTHORIZED).build();
 		}
 		User user = getUser(idToken);
@@ -72,10 +74,10 @@ public class MessageController {
 	}
 
 	private User getUser(final String idToken) throws GeneralSecurityException, IOException {
-		String userId = GoogleAuth.getUserId(idToken);
+		String userId = googleAuth.getUserId(idToken);
 		User user = userService.findByUserId(userId);
 		if (user == null) {
-			String email = GoogleAuth.getEmail(idToken);
+			String email = googleAuth.getEmail(idToken);
 			user = userService.create(userId, email);
 		}
 		return user;
