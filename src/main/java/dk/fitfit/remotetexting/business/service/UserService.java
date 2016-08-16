@@ -20,7 +20,6 @@ public class UserService implements UserServiceInterface {
 		return userRepository.findAll();
 	}
 
-	// TODO: Should this method be called findOrCreateUserById?
 	@Override
 	public User findByUserId(String userId) {
 		return userRepository.findByUserId(userId);
