@@ -40,5 +40,4 @@ public class CurrentUserHolder {
 		Authentication userAuthentication = oAuth2Authentication.getUserAuthentication();
 		return (Map) userAuthentication.getDetails();
 	}
-
 }
