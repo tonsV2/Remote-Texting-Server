@@ -2,17 +2,14 @@ package dk.fitfit.remotetexting.business.service;
 
 import dk.fitfit.remotetexting.business.domain.Message;
 import dk.fitfit.remotetexting.business.domain.PhoneNumber;
+import dk.fitfit.remotetexting.business.domain.User;
 import dk.fitfit.remotetexting.business.repository.MessageRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class MessageService implements MessageServiceInterface {
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
-
 	@Autowired
 	private MessageRepository messageRepository;
 
@@ -33,13 +30,15 @@ public class MessageService implements MessageServiceInterface {
 	@Override
 	public void sent(final Long id) {
 		Message message = messageRepository.findOne(id);
+// TODO:
 //		message.sent(true);
 //		store timestamp
 		messageRepository.save(message);
 	}
 
 	@Override
-	public Iterable<Message> findBy(final long phoneNumberId) {
+	public Iterable<Message> findBy(final User user, final long phoneNumberId) {
+		// TODO: Ensure messages belong to user!
 		return messageRepository.findByFromId(phoneNumberId);
 	}
 }

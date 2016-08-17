@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 @Component
-public class CurrentUser {
+public class CurrentUserHolder {
 	@Autowired
 	private UserServiceInterface userService;
 

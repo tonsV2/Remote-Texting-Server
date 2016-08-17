@@ -9,9 +9,8 @@ import dk.fitfit.remotetexting.business.domain.Message;
 import dk.fitfit.remotetexting.business.domain.User;
 import dk.fitfit.remotetexting.business.service.MessageServiceInterface;
 import dk.fitfit.remotetexting.business.service.UserServiceInterface;
+import dk.fitfit.remotetexting.util.CurrentUserHolder;
 import dk.fitfit.remotetexting.util.GoogleAuth;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +26,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RestController
 @RequestMapping("/api")
 public class MessageController {
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	@Autowired
+	private CurrentUserHolder currentUserHolder;
 
 	@Autowired
 	private GoogleAuth googleAuth;
@@ -47,7 +47,8 @@ public class MessageController {
 	// TODO: Ensure that a user only can get back it's own messages!!!
 	@RequestMapping(value = "/phoneNumbers/{phoneNumberId}/messages", method = GET)
 	public MessageResourceContainer getByPhoneNumber(@PathVariable long phoneNumberId) {
-		Iterable<Message> messages = messageService.findBy(phoneNumberId);
+		User user = currentUserHolder.getUser();
+		Iterable<Message> messages = messageService.findBy(user, phoneNumberId);
 		return messageResourceContainerAssembler.toResource(messages);
 	}
 
@@ -73,6 +74,7 @@ public class MessageController {
 		return ResponseEntity.ok().build();
 	}
 
+	// TODO: Move this into CurrentUserHolder
 	private User getUser(final String idToken) throws GeneralSecurityException, IOException {
 		String userId = googleAuth.getUserId(idToken);
 		User user = userService.findByUserId(userId);
@@ -86,14 +88,13 @@ public class MessageController {
 	@RequestMapping(value = "/messages/{id}/sent", method = PUT)
 	public ResponseEntity<Void> sent(@PathVariable long id, @RequestParam String idToken) {
 		messageService.sent(id);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.status(NOT_IMPLEMENTED).build();
 	}
 
 // TODO: https://stackoverflow.com/questions/15609105/how-to-save-the-delivery-status-of-sms-in-default-sms-table-in-android
 	@RequestMapping(value = "/messages/{id}/received", method = PUT)
 	public ResponseEntity<Void> received(@PathVariable long id, @RequestParam String idToken) {
 //		messageService.received(id);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.status(NOT_IMPLEMENTED).build();
 	}
-
 }
