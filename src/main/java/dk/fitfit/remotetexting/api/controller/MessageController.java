@@ -45,7 +45,9 @@ public class MessageController {
 	private MessageResourceContainerAssembler messageResourceContainerAssembler;
 
 	// TODO: Ensure that a user only can get back it's own messages!!!
-	@RequestMapping(value = "/phoneNumbers/{phoneNumberId}/messages", method = GET)
+	// TDOO: Make a better url
+//	@RequestMapping(value = "/phoneNumbers/{phoneNumberId}/messages", method = GET)
+	@RequestMapping(value = "/messages/{phoneNumberId}", method = GET)
 	public MessageResourceContainer getByPhoneNumber(@PathVariable long phoneNumberId) {
 		User user = currentUserHolder.getUser();
 		Iterable<Message> messages = messageService.findBy(user, phoneNumberId);
