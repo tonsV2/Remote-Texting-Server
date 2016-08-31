@@ -18,7 +18,7 @@ public class User {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonManagedReference
 	private Set<PhoneNumber> phoneNumbers = new HashSet<>();
-	private String gcmRegId;
+	private String fcmRegId;
 
 	public Long getId() {
 		return id;
@@ -48,11 +48,11 @@ public class User {
 		return phoneNumbers;
 	}
 
-	public String getGcmRegId() {
-		return gcmRegId;
+	public String getFcmRegId() {
+		return fcmRegId;
 	}
 
-	public void setGcmRegId(final String gcmRegId) {
-		this.gcmRegId = gcmRegId;
+	public void setFcmRegId(final String fcmRegId) {
+		this.fcmRegId = fcmRegId;
 	}
 }

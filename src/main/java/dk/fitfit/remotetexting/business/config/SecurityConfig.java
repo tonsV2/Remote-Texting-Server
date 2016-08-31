@@ -15,6 +15,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.csrf().disable()   // TODO: enable CSRF
 				.antMatcher("/**")
 				.authorizeRequests()
+				.antMatchers("/api/users/fcmToken").permitAll()
 				.antMatchers("/api/messages").permitAll()
 				.antMatchers("/api/messages/*/sent").permitAll()
 				.antMatchers("/api/messages/*/received").permitAll()

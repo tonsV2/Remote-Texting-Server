@@ -26,15 +26,16 @@ public class UserService implements UserServiceInterface {
 	}
 
 	@Override
-	public User findOne(final long id) {
-		return userRepository.findOne(id);
-	}
-
-	@Override
 	public User create(final String userId, final String email) {
 		User user = new User();
 		user.setUserId(userId);
 		user.setEmail(email);
+		userRepository.save(user);
+		return user;
+	}
+
+	@Override
+	public User save(final User user) {
 		userRepository.save(user);
 		return user;
 	}
