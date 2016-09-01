@@ -10,5 +10,5 @@ public interface MessageServiceInterface {
 	Iterable<Message> findBy(final User userId, long phoneNumberId);
 	void save(Message message);
 	void sent(Long id);
-	void send(User user, String phoneNumber, String content) throws IOException;
+	void send(User user, String phoneNumber, String message) throws IOException;
 }

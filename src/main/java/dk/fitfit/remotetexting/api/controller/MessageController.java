@@ -64,8 +64,8 @@ public class MessageController {
 // Probably shouldn't be MessageResource as argument...
 	public ResponseEntity<Void> sendMessage() throws Exception {
 		String phoneNumber = "+4542730737";
-		String content = "Some content... Shalalalala";
-		messageService.send(currentUserHolder.getUser(), phoneNumber, content);
+		String message = "Some content... Shalalalala";
+		messageService.send(currentUserHolder.getUser(), phoneNumber, message);
 		return ResponseEntity.ok().build();
 	}
 

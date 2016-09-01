@@ -45,11 +45,13 @@ public class MessageService implements MessageServiceInterface {
 	}
 
 	@Override
-	public void send(final User user, final String phoneNumber, final String content) throws IOException {
+	// TODO: This method should take a Message object as argument
+	public void send(final User user, final String phoneNumber, final String message) throws IOException {
 		Map<String, String> data = new HashMap<>();
 		data.put("command", "sendMessage");
+		// TODO: Store message and send id to client
 		data.put("to", phoneNumber);
-		data.put("content", content);
+		data.put("message", message);
 		notificationService.sendFCMMessage(user.getFcmRegId(), data);
 	}
 
