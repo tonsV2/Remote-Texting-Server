@@ -12,6 +12,7 @@ import dk.fitfit.remotetexting.business.service.NotificationService;
 import dk.fitfit.remotetexting.business.service.UserServiceInterface;
 import dk.fitfit.remotetexting.util.CurrentUserHolder;
 import dk.fitfit.remotetexting.util.GoogleAuth;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +50,6 @@ public class MessageController {
 	private NotificationService notificationService;
 
 	// TODO: Ensure that a user only can get back it's own messages!!!
-	// TDOO: Make a better url
 //	@RequestMapping(value = "/phoneNumbers/{phoneNumberId}/messages", method = GET)
 	@RequestMapping(value = "/messages/{phoneNumberId}", method = GET)
 	public MessageResourceContainer getByPhoneNumber(@PathVariable long phoneNumberId) {
@@ -66,8 +66,13 @@ public class MessageController {
 	@RequestMapping(value = "/messages/send", method = POST)
 //	public ResponseEntity<Void> sendMessage(@RequestBody MessageResource resource) throws Exception {
 	public ResponseEntity<Void> sendMessage() throws Exception {
-		final String fcmRegId = currentUserHolder.getUser().getFcmRegId();
-		notificationService.sendFCMMessage(fcmRegId);
+		String fcmRegId = currentUserHolder.getUser().getFcmRegId();
+
+		JSONObject data = new JSONObject();
+		data.put("command", "sendMessage");
+		data.put("key", "value");
+
+		notificationService.sendFCMMessage(fcmRegId, data);
 		return ResponseEntity.ok().build();
 	}
 
@@ -94,12 +99,6 @@ public class MessageController {
 		return user;
 	}
 
-	@RequestMapping(value = "/messages/{id}/sent", method = PUT)
-	public ResponseEntity<Void> sent(@PathVariable long id, @RequestParam String idToken) {
-		messageService.sent(id);
-		return ResponseEntity.status(NOT_IMPLEMENTED).build();
-	}
-
 	// TODO: Move this to the UserController
 	@RequestMapping(value = "/users/fcmToken", method = PUT)
 	public ResponseEntity<Void> putFcmToken(@RequestParam String fcmToken, @RequestParam String idToken) throws GeneralSecurityException, IOException {
@@ -110,6 +109,12 @@ public class MessageController {
 		user.setFcmRegId(fcmToken);
 		userService.save(user);
 		return ResponseEntity.ok().build();
+	}
+
+	@RequestMapping(value = "/messages/{id}/sent", method = PUT)
+	public ResponseEntity<Void> sent(@PathVariable long id, @RequestParam String idToken) {
+		messageService.sent(id);
+		return ResponseEntity.status(NOT_IMPLEMENTED).build();
 	}
 
 // TODO: https://stackoverflow.com/questions/15609105/how-to-save-the-delivery-status-of-sms-in-default-sms-table-in-android

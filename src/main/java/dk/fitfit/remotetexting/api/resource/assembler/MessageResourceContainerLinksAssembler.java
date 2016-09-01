@@ -22,7 +22,7 @@ public class MessageResourceContainerLinksAssembler implements ResourceLinksAsse
 		Message message = entity.iterator().next();
 		try {
 			return Lists.newArrayList(new SelfLink(message), new PrototypeLink(), new SendMessageLink());
-		} catch (GeneralSecurityException | IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -41,8 +41,8 @@ public class MessageResourceContainerLinksAssembler implements ResourceLinksAsse
 	}
 
 	static class SendMessageLink extends Link {
-		public SendMessageLink() throws GeneralSecurityException, IOException {
-			super("send", linkTo(methodOn(MessageController.class).sendMessage(null)).toString());
+		public SendMessageLink() throws Exception {
+			super("send", linkTo(methodOn(MessageController.class).sendMessage()).toString());
 		}
 	}
 

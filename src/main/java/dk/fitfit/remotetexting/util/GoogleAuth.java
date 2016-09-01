@@ -4,7 +4,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import org.springframework.beans.factory.annotation.Value;
+import dk.fitfit.remotetexting.business.service.ConfigurationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -14,9 +15,8 @@ import java.util.Collections;
 
 @Component
 public class GoogleAuth {
-	// TODO: http://tuhrig.de/why-using-springs-value-annotation-is-bad/
-	@Value("${security.oauth2.client.clientId}")
-	private String clientId;
+	@Autowired
+	private ConfigurationService configurationService;
 
 	public String getUserId(String idTokenString) throws GeneralSecurityException, IOException {
 		GoogleIdTokenVerifier verifier = getTokenVerifier();
@@ -43,7 +43,7 @@ public class GoogleAuth {
 	public GoogleIdTokenVerifier getTokenVerifier() {
 		NetHttpTransport transport = new NetHttpTransport();
 		return new GoogleIdTokenVerifier.Builder(transport, new JacksonFactory())
-				.setAudience(Collections.singletonList(clientId))
+				.setAudience(Collections.singletonList(configurationService.getClientId()))
 				.build();
 	}
 
