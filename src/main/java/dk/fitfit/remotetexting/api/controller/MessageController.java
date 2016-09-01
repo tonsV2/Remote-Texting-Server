@@ -8,11 +8,9 @@ import dk.fitfit.remotetexting.api.resource.assembler.MessageResourceContainerAs
 import dk.fitfit.remotetexting.business.domain.Message;
 import dk.fitfit.remotetexting.business.domain.User;
 import dk.fitfit.remotetexting.business.service.MessageServiceInterface;
-import dk.fitfit.remotetexting.business.service.NotificationService;
 import dk.fitfit.remotetexting.business.service.UserServiceInterface;
 import dk.fitfit.remotetexting.util.CurrentUserHolder;
 import dk.fitfit.remotetexting.util.GoogleAuth;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,9 +44,6 @@ public class MessageController {
 	@Autowired
 	private MessageResourceContainerAssembler messageResourceContainerAssembler;
 
-	@Autowired
-	private NotificationService notificationService;
-
 	// TODO: Ensure that a user only can get back it's own messages!!!
 //	@RequestMapping(value = "/phoneNumbers/{phoneNumberId}/messages", method = GET)
 	@RequestMapping(value = "/messages/{phoneNumberId}", method = GET)
@@ -63,16 +58,14 @@ public class MessageController {
 		return new MessageResourceBuilder().build();
 	}
 
-	@RequestMapping(value = "/messages/send", method = POST)
+//	@RequestMapping(value = "/messages/send", method = POST)
+	@RequestMapping(value = "/messages/send", method = GET)
 //	public ResponseEntity<Void> sendMessage(@RequestBody MessageResource resource) throws Exception {
+// Probably shouldn't be MessageResource as argument...
 	public ResponseEntity<Void> sendMessage() throws Exception {
-		String fcmRegId = currentUserHolder.getUser().getFcmRegId();
-
-		JSONObject data = new JSONObject();
-		data.put("command", "sendMessage");
-		data.put("key", "value");
-
-		notificationService.sendFCMMessage(fcmRegId, data);
+		String phoneNumber = "+4542730737";
+		String content = "Some content... Shalalalala";
+		messageService.send(currentUserHolder.getUser(), phoneNumber, content);
 		return ResponseEntity.ok().build();
 	}
 
