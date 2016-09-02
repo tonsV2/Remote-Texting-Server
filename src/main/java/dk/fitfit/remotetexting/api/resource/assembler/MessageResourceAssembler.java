@@ -21,7 +21,9 @@ public class MessageResourceAssembler  implements ResourceAssembler<Message, Mes
 	@Override
 	public MessageResource toResource(final Message message) {
 		PhoneNumberResource from = phoneNumberResourceAssembler.toResource(message.getFrom());
+		PhoneNumberResource to = phoneNumberResourceAssembler.toResource(message.getTo());
 		return new MessageResourceBuilder()
+				.withTo(to)
 				.withFrom(from)
 				.withContent(message.getContent())
 				.withTimestampProvider(message.getTimestampProvider())

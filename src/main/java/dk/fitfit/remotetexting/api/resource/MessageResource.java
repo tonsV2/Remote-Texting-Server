@@ -4,6 +4,7 @@ import org.springframework.hateoas.ResourceSupport;
 
 
 public class MessageResource extends ResourceSupport {
+	private PhoneNumberResource to;
 	private PhoneNumberResource from;
 	private String content;
 	private long timestampProvider;
@@ -12,11 +13,20 @@ public class MessageResource extends ResourceSupport {
 	protected MessageResource() {
 	}
 
-	protected MessageResource(final PhoneNumberResource from, final String content, final long timestampProvider, final long timestampReceived) {
+	protected MessageResource(final PhoneNumberResource to, final PhoneNumberResource from, final String content, final long timestampProvider, final long timestampReceived) {
+		this.to = to;
 		this.from = from;
 		this.content = content;
 		this.timestampProvider = timestampProvider;
 		this.timestampReceived = timestampReceived;
+	}
+
+	public PhoneNumberResource getTo() {
+		return to;
+	}
+
+	public void setTo(final PhoneNumberResource to) {
+		this.to = to;
 	}
 
 	public PhoneNumberResource getFrom() {

@@ -13,6 +13,7 @@ import dk.fitfit.remotetexting.business.service.UserServiceInterface;
 import dk.fitfit.remotetexting.util.CurrentUserHolder;
 import dk.fitfit.remotetexting.util.GoogleAuth;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,11 +57,16 @@ public class MessageController {
 	}
 
 	// TODO: Ensure that a user only can get back it's own messages!!!
-	@RequestMapping(value = "/messages/{id}", method = GET)
-	public MessageResource getById(@PathVariable long id) {
-		User user = currentUserHolder.getUser();
+	@RequestMapping(value = "/messages/{id}/msg", method = GET)
+	public ResponseEntity<?> getById(@PathVariable long id, @RequestParam String idToken) throws GeneralSecurityException, IOException {
+		if (googleAuth.getUserId(idToken) == null) {
+			return ResponseEntity.status(UNAUTHORIZED).build();
+		}
+
+		User user = getUser(idToken);
 		Message message = messageService.findOne(user, id);
-		return messageResourceAssembler.toResource(message);
+		MessageResource messageResource = messageResourceAssembler.toResource(message);
+		return new ResponseEntity<>(messageResource, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/messages/prototype", method = GET)
@@ -73,7 +79,7 @@ public class MessageController {
 //	public ResponseEntity<Void> sendMessage(@RequestBody MessageResource resource) throws Exception {
 	public ResponseEntity<Void> sendMessage() throws Exception {
 		String phoneNumber = "+4542730737";
-		String text = "Some content... Shalalalala";
+		String text = "Some content... Shalalalala!";
 		Message message = new Message();
 		message.setTo(new PhoneNumber(phoneNumber));
 		message.setContent(text);

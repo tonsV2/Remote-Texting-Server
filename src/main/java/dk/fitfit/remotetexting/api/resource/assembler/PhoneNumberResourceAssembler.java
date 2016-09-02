@@ -24,6 +24,9 @@ public class PhoneNumberResourceAssembler implements ResourceAssembler<PhoneNumb
 
 	@Override
 	public PhoneNumberResource toResource(final PhoneNumber phoneNumber) {
+		if (phoneNumber == null) {
+			return null;
+		}
 		Contact contact = phoneNumber.getContact();
 		ContactResource contactResource = contactResourceAssembler.toResource(contact);
 		return new PhoneNumberResourceBuilder()

@@ -4,10 +4,16 @@ import org.apache.commons.lang3.builder.Builder;
 
 
 public class MessageResourceBuilder implements Builder<MessageResource> {
+	private PhoneNumberResource to;
 	private PhoneNumberResource from;
 	private String content;
 	private long timestampProvider;
 	private long timestampReceived;
+
+	public MessageResourceBuilder withTo(final PhoneNumberResource to) {
+		this.to = to;
+		return this;
+	}
 
 	public MessageResourceBuilder withFrom(final PhoneNumberResource from) {
 		this.from = from;
@@ -31,6 +37,6 @@ public class MessageResourceBuilder implements Builder<MessageResource> {
 
 	@Override
 	public MessageResource build() {
-		return new MessageResource(from, content, timestampProvider, timestampReceived);
+		return new MessageResource(to, from, content, timestampProvider, timestampReceived);
 	}
 }
