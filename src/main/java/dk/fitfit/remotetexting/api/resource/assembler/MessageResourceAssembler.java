@@ -27,7 +27,8 @@ public class MessageResourceAssembler  implements ResourceAssembler<Message, Mes
 				.withFrom(from)
 				.withContent(message.getContent())
 				.withTimestampProvider(message.getTimestampProvider())
-				.withTimestampReceived(message.getTimestampReceived())
+				.withTimestampReceived(message.getTimestampDelivered())
+				.withTimestampSent(message.getTimestampSent())
 				.build();
 	}
 
@@ -38,7 +39,8 @@ public class MessageResourceAssembler  implements ResourceAssembler<Message, Mes
 		message.setFrom(phoneNumber);
 		message.setContent(resource.getContent());
 		message.setTimestampProvider(resource.getTimestampProvider());
-		message.setTimestampReceived(resource.getTimestampReceived());
+		message.setTimestampDelivered(resource.getTimestampDelivered());
+		message.setTimestampSent(resource.getTimestampSent());
 		return message;
 	}
 

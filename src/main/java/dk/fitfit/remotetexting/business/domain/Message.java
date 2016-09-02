@@ -18,7 +18,8 @@ public class Message {
 	private PhoneNumber to;
 	private String content;
 	private long timestampProvider;
-	private long timestampReceived;
+	private long timestampDelivered;
+	private long timestampSent;
 
 	public Long getId() {
 		return id;
@@ -60,11 +61,19 @@ public class Message {
 		this.timestampProvider = timestampProvider;
 	}
 
-	public long getTimestampReceived() {
-		return timestampReceived;
+	public long getTimestampDelivered() {
+		return timestampDelivered;
 	}
 
-	public void setTimestampReceived(final long timestampReceived) {
-		this.timestampReceived = timestampReceived;
+	public void setTimestampDelivered(final long timestampDelivered) {
+		this.timestampDelivered = timestampDelivered;
+	}
+
+	public long getTimestampSent() {
+		return timestampSent;
+	}
+
+	public void setTimestampSent(final long timestampSent) {
+		this.timestampSent = timestampSent;
 	}
 }

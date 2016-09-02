@@ -35,12 +35,16 @@ public class MessageService implements MessageServiceInterface {
 	}
 
 	@Override
-	public void sent(final Long id) {
+	public void sent(final Long id, final Long ts) {
 		Message message = messageRepository.findOne(id);
-// TODO:
-//		text.sent(true);
-//		store timestamp... which should probably be passed form the client... since the client might send the text and
-// then later (due to lack of connect or server down time) post to the server about it
+		message.setTimestampSent(ts);
+		messageRepository.save(message);
+	}
+
+	@Override
+	public void delivered(final Long id, final Long ts) {
+		Message message = messageRepository.findOne(id);
+		message.setTimestampDelivered(ts);
 		messageRepository.save(message);
 	}
 

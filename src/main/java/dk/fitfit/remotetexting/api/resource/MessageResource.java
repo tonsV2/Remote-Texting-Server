@@ -8,17 +8,16 @@ public class MessageResource extends ResourceSupport {
 	private PhoneNumberResource from;
 	private String content;
 	private long timestampProvider;
-	private long timestampReceived;
+	private long timestampDelivered;
+	private long timestampSent;
 
-	protected MessageResource() {
-	}
-
-	protected MessageResource(final PhoneNumberResource to, final PhoneNumberResource from, final String content, final long timestampProvider, final long timestampReceived) {
+	protected MessageResource(final PhoneNumberResource to, final PhoneNumberResource from, final String content, final long timestampProvider, final long timestampDelivered, final long timestampSent) {
 		this.to = to;
 		this.from = from;
 		this.content = content;
 		this.timestampProvider = timestampProvider;
-		this.timestampReceived = timestampReceived;
+		this.timestampDelivered = timestampDelivered;
+		this.timestampSent = timestampSent;
 	}
 
 	public PhoneNumberResource getTo() {
@@ -53,11 +52,19 @@ public class MessageResource extends ResourceSupport {
 		this.timestampProvider = timestampProvider;
 	}
 
-	public long getTimestampReceived() {
-		return timestampReceived;
+	public long getTimestampDelivered() {
+		return timestampDelivered;
 	}
 
-	public void setTimestampReceived(final long timestampReceived) {
-		this.timestampReceived = timestampReceived;
+	public void setTimestampDelivered(final long timestampDelivered) {
+		this.timestampDelivered = timestampDelivered;
+	}
+
+	public long getTimestampSent() {
+		return timestampSent;
+	}
+
+	public void setTimestampSent(final long timestampSent) {
+		this.timestampSent = timestampSent;
 	}
 }

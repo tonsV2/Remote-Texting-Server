@@ -18,10 +18,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers(HttpMethod.PUT, "/api/users/fcmToken").permitAll()
 				.antMatchers("/api/messages").permitAll()
-				// TODO: Hu? Why can't the pattern end with '*'?
+				// TODO: Hu? Why can't this pattern end with '*'?
 				.antMatchers("/api/messages/*/msg").permitAll()
-				.antMatchers(HttpMethod.PUT, "/api/messages/*/sent").permitAll()
-				.antMatchers(HttpMethod.PUT, "/api/messages/*/received").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/messages/*/sent/*").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/messages/*/delivered/*").permitAll()
 				.antMatchers("/", "/login**", "/webjars/**").permitAll()
 				.anyRequest()
 				.authenticated();

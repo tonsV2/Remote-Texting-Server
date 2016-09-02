@@ -9,7 +9,8 @@ import java.io.IOException;
 public interface MessageServiceInterface {
 	Iterable<Message> findBy(final User userId, long phoneNumberId);
 	void save(final Message message);
-	void sent(final Long id);
+	void sent(final Long id, final Long ts);
+	void delivered(final Long id, final Long ts);
 	void send(final User user, final Message message) throws IOException;
 	Message findOne(User user, long messageId);
 }

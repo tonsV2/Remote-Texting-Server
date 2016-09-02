@@ -8,7 +8,8 @@ public class MessageResourceBuilder implements Builder<MessageResource> {
 	private PhoneNumberResource from;
 	private String content;
 	private long timestampProvider;
-	private long timestampReceived;
+	private long timestampDelivered;
+	private long timestampSent;
 
 	public MessageResourceBuilder withTo(final PhoneNumberResource to) {
 		this.to = to;
@@ -31,12 +32,17 @@ public class MessageResourceBuilder implements Builder<MessageResource> {
 	}
 
 	public MessageResourceBuilder withTimestampReceived(final long timestampReceived) {
-		this.timestampReceived = timestampReceived;
+		this.timestampDelivered = timestampReceived;
+		return this;
+	}
+
+	public MessageResourceBuilder withTimestampSent(final long timestampSent) {
+		this.timestampSent = timestampSent;
 		return this;
 	}
 
 	@Override
 	public MessageResource build() {
-		return new MessageResource(to, from, content, timestampProvider, timestampReceived);
+		return new MessageResource(to, from, content, timestampProvider, timestampDelivered, timestampSent);
 	}
 }

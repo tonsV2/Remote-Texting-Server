@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
-import static org.springframework.http.HttpStatus.NOT_IMPLEMENTED;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -122,16 +121,16 @@ public class MessageController {
 		return ResponseEntity.ok().build();
 	}
 
-	@RequestMapping(value = "/messages/{id}/sent", method = PUT)
-	public ResponseEntity<Void> sent(@PathVariable long id, @RequestParam String idToken) {
-		messageService.sent(id);
-		return ResponseEntity.status(NOT_IMPLEMENTED).build();
+	@RequestMapping(value = "/messages/{id}/sent/{ts}", method = PUT)
+	public ResponseEntity<Void> sent(@PathVariable long id, @PathVariable long ts, @RequestParam String idToken) {
+		messageService.sent(id, ts);
+		return ResponseEntity.ok().build();
 	}
 
 // TODO: https://stackoverflow.com/questions/15609105/how-to-save-the-delivery-status-of-sms-in-default-sms-table-in-android
-	@RequestMapping(value = "/messages/{id}/received", method = PUT)
-	public ResponseEntity<Void> received(@PathVariable long id, @RequestParam String idToken) {
-//		messageService.received(id);
-		return ResponseEntity.status(NOT_IMPLEMENTED).build();
+	@RequestMapping(value = "/messages/{id}/delivered/{ts}", method = PUT)
+	public ResponseEntity<Void> delivered(@PathVariable long id, @PathVariable long ts, @RequestParam String idToken) {
+		messageService.delivered(id, ts);
+		return ResponseEntity.ok().build();
 	}
 }
