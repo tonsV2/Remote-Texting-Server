@@ -6,6 +6,7 @@ import dk.fitfit.remotetexting.api.resource.MessageResourceContainer;
 import dk.fitfit.remotetexting.api.resource.assembler.MessageResourceAssembler;
 import dk.fitfit.remotetexting.api.resource.assembler.MessageResourceContainerAssembler;
 import dk.fitfit.remotetexting.business.domain.Message;
+import dk.fitfit.remotetexting.business.domain.PhoneNumber;
 import dk.fitfit.remotetexting.business.domain.User;
 import dk.fitfit.remotetexting.business.service.MessageServiceInterface;
 import dk.fitfit.remotetexting.business.service.UserServiceInterface;
@@ -45,12 +46,21 @@ public class MessageController {
 	private MessageResourceContainerAssembler messageResourceContainerAssembler;
 
 	// TODO: Ensure that a user only can get back it's own messages!!!
-//	@RequestMapping(value = "/phoneNumbers/{phoneNumberId}/messages", method = GET)
-	@RequestMapping(value = "/messages/{phoneNumberId}", method = GET)
+	@RequestMapping(value = "/phoneNumbers/{phoneNumberId}/messages", method = GET)
+//	@RequestMapping(value = "/messages/{phoneNumberId}", method = GET)
+// The above request mapping clashes with the mapping of getById
 	public MessageResourceContainer getByPhoneNumber(@PathVariable long phoneNumberId) {
 		User user = currentUserHolder.getUser();
 		Iterable<Message> messages = messageService.findBy(user, phoneNumberId);
 		return messageResourceContainerAssembler.toResource(messages);
+	}
+
+	// TODO: Ensure that a user only can get back it's own messages!!!
+	@RequestMapping(value = "/messages/{id}", method = GET)
+	public MessageResource getById(@PathVariable long id) {
+		User user = currentUserHolder.getUser();
+		Message message = messageService.findOne(user, id);
+		return messageResourceAssembler.toResource(message);
 	}
 
 	@RequestMapping(value = "/messages/prototype", method = GET)
@@ -61,11 +71,13 @@ public class MessageController {
 //	@RequestMapping(value = "/messages/send", method = POST)
 	@RequestMapping(value = "/messages/send", method = GET)
 //	public ResponseEntity<Void> sendMessage(@RequestBody MessageResource resource) throws Exception {
-// Probably shouldn't be MessageResource as argument...
 	public ResponseEntity<Void> sendMessage() throws Exception {
 		String phoneNumber = "+4542730737";
-		String message = "Some content... Shalalalala";
-		messageService.send(currentUserHolder.getUser(), phoneNumber, message);
+		String text = "Some content... Shalalalala";
+		Message message = new Message();
+		message.setTo(new PhoneNumber(phoneNumber));
+		message.setContent(text);
+		messageService.send(currentUserHolder.getUser(), message);
 		return ResponseEntity.ok().build();
 	}
 

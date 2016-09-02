@@ -24,6 +24,13 @@ public class PhoneNumber {
 	@JsonBackReference
 	private User user;
 
+	public PhoneNumber() {
+	}
+
+	public PhoneNumber(final String phoneNumber) {
+		this.number = phoneNumber;
+	}
+
 	public Long getId() {
 		return id;
 	}

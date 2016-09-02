@@ -13,6 +13,9 @@ public class Message {
 	@ManyToOne
 	@JsonBackReference
 	private PhoneNumber from;
+	@ManyToOne
+	@JsonBackReference
+	private PhoneNumber to;
 	private String content;
 	private long timestampProvider;
 	private long timestampReceived;
@@ -31,6 +34,14 @@ public class Message {
 
 	public void setFrom(final PhoneNumber from) {
 		this.from = from;
+	}
+
+	public PhoneNumber getTo() {
+		return to;
+	}
+
+	public void setTo(final PhoneNumber to) {
+		this.to = to;
 	}
 
 	public String getContent() {

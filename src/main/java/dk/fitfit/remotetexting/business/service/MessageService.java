@@ -38,21 +38,34 @@ public class MessageService implements MessageServiceInterface {
 	public void sent(final Long id) {
 		Message message = messageRepository.findOne(id);
 // TODO:
-//		message.sent(true);
-//		store timestamp... which should probably be passed form the client... since the client might send the message and
+//		text.sent(true);
+//		store timestamp... which should probably be passed form the client... since the client might send the text and
 // then later (due to lack of connect or server down time) post to the server about it
 		messageRepository.save(message);
 	}
 
 	@Override
 	// TODO: This method should take a Message object as argument
-	public void send(final User user, final String phoneNumber, final String message) throws IOException {
+	public void send(final User user, final Message message) throws IOException {
+		String phoneNumber = message.getTo().getNumber();
+		// TODO: Load phoneNumber from repository... this could probably be done smarter... prepopulated prototype?
+		PhoneNumber to = phoneNumberService.findByNumber(phoneNumber);
+		if (to == null) {
+			phoneNumberService.save(message.getTo());
+		} else {
+			message.setTo(to);
+		}
+		messageRepository.save(message);
+
 		Map<String, String> data = new HashMap<>();
 		data.put("command", "sendMessage");
-		// TODO: Store message and send id to client
-		data.put("to", phoneNumber);
-		data.put("message", message);
+		data.put("messageId", String.valueOf(message.getId()));
 		notificationService.sendFCMMessage(user.getFcmRegId(), data);
+	}
+
+	@Override
+	public Message findOne(final User user, final long messageId) {
+		return messageRepository.findOne(messageId);
 	}
 
 	@Override
