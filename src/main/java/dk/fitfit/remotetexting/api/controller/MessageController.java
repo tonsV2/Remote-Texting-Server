@@ -1,8 +1,6 @@
 package dk.fitfit.remotetexting.api.controller;
 
-import dk.fitfit.remotetexting.api.resource.MessageResource;
-import dk.fitfit.remotetexting.api.resource.MessageResourceBuilder;
-import dk.fitfit.remotetexting.api.resource.MessageResourceContainer;
+import dk.fitfit.remotetexting.api.resource.*;
 import dk.fitfit.remotetexting.api.resource.assembler.MessageResourceAssembler;
 import dk.fitfit.remotetexting.api.resource.assembler.MessageResourceContainerAssembler;
 import dk.fitfit.remotetexting.business.domain.Message;
@@ -70,18 +68,20 @@ public class MessageController {
 
 	@RequestMapping(value = "/messages/prototype", method = GET)
 	public MessageResource getPrototype() {
-		return new MessageResourceBuilder().build();
+		PhoneNumberResource phoneNumberResource = new PhoneNumberResourceBuilder().build();
+		return new MessageResourceBuilder().withTo(phoneNumberResource).build();
 	}
 
-//	@RequestMapping(value = "/messages/send", method = POST)
-	@RequestMapping(value = "/messages/send", method = GET)
-//	public ResponseEntity<Void> sendMessage(@RequestBody MessageResource resource) throws Exception {
-	public ResponseEntity<Void> sendMessage() throws Exception {
-		String phoneNumber = "+4542730737";
-		String text = "Some content... Shalalalala!";
+	@RequestMapping(value = "/messages/send", method = POST)
+	public ResponseEntity<Void> sendMessage(@RequestBody MessageResource resource) throws Exception {
+		// TODO: Use assembler
+		String phoneNumber = resource.getTo().getNumber();
+		String content = resource.getContent();
+
 		Message message = new Message();
 		message.setTo(new PhoneNumber(phoneNumber));
-		message.setContent(text);
+		message.setContent(content);
+
 		messageService.send(currentUserHolder.getUser(), message);
 		return ResponseEntity.ok().build();
 	}

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>Demo</title>
+	</head>
+	<body ng-app="app" ng-controller="send as vm">
+		<h1>Send...</h1>
+		<div class="container" ng-show="!vm.authenticated">
+			Login with: <a href="/login">Google</a>
+		</div>
+		<div class="container" ng-show="vm.authenticated">
+			Logged in as: <span ng-bind="vm.user"></span>
+		</div>
+
+		<form ng-show="vm.authenticated">
+			<label for="to">To: </label>
+			<input id="to" ng-model="vm.to" />
+			<br />
+			<textarea id="message" ng-model="vm.message"></textarea>
+			<br />
+			<button id="submit" ng-click="vm.send()">Submit</button>
+		</form>
+		<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="/webjars/angularjs/angular.min.js"></script>
+		<script type="text/javascript">
+			angular.module("app", []).controller("send", ['$scope', '$http', function($scope, $http) {
+				var vm = this;
+
+				$http.get("/api/users").success(function(data) {
+					vm.user = data.email;
+					vm.authenticated = true;
+				}).error(function() {
+					vm.user = "N/A";
+					vm.authenticated = false;
+				});
+
+				vm.send = function () {
+					$('#submit').prop("disabled", true);
+					var body = {
+						"to": {"number": vm.to},
+						"content": vm.message
+					};
+					console.log(body);
+					$http.post("/api/messages/send", body).success(function(data) {
+						$('#submit').prop("disabled", false);
+						console.log("posted!");
+						vm.message = "";
+					}).error(function(data) {
+						console.log(data);
+					});
+				};
+			}]);
+		</script>
+	</body>
+</html>

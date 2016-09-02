@@ -11,6 +11,9 @@ public class MessageResource extends ResourceSupport {
 	private long timestampDelivered;
 	private long timestampSent;
 
+	public MessageResource() {
+	}
+
 	protected MessageResource(final PhoneNumberResource to, final PhoneNumberResource from, final String content, final long timestampProvider, final long timestampDelivered, final long timestampSent) {
 		this.to = to;
 		this.from = from;

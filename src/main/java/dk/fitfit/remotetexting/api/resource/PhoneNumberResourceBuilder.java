@@ -32,7 +32,9 @@ public class PhoneNumberResourceBuilder implements Builder<PhoneNumberResource> 
 		if(contact != null) {
 			phoneNumberResource.setContact(contact);
 		}
-		phoneNumberResource.add(links);
+		if(links != null) {
+			phoneNumberResource.add(links);
+		}
 		return phoneNumberResource;
 	}
 }

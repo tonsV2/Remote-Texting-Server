@@ -42,7 +42,7 @@ public class MessageResourceContainerLinksAssembler implements ResourceLinksAsse
 
 	static class SendMessageLink extends Link {
 		public SendMessageLink() throws Exception {
-			super("send", linkTo(methodOn(MessageController.class).sendMessage()).toString());
+			super("send", linkTo(methodOn(MessageController.class).sendMessage(null)).toString());
 		}
 	}
 
