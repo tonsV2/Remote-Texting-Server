@@ -2,15 +2,14 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Demo</title>
+		<title>Remote Texting</title>
 	</head>
 	<body ng-app="app" ng-controller="send as vm">
-		<h1>Send...</h1>
+		<h1>Send message</h1>
+		<a href="index.html">Home</a>
+
 		<div class="container" ng-show="!vm.authenticated">
 			Login with: <a href="/login">Google</a>
-		</div>
-		<div class="container" ng-show="vm.authenticated">
-			Logged in as: <span ng-bind="vm.user"></span>
 		</div>
 
 		<form ng-show="vm.authenticated">
@@ -21,6 +20,7 @@
 			<br />
 			<button id="submit" ng-click="vm.send()">Submit</button>
 		</form>
+
 		<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
 		<script type="text/javascript" src="/webjars/angularjs/angular.min.js"></script>
 		<script type="text/javascript">

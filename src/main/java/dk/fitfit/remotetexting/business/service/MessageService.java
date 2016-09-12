@@ -75,6 +75,6 @@ public class MessageService implements MessageServiceInterface {
 	@Override
 	public Iterable<Message> findBy(final User user, final long phoneNumberId) {
 		// TODO: Ensure messages belong to user!
-		return messageRepository.findByFromId(phoneNumberId);
+		return messageRepository.findByFromIdOrToIdOrderById(phoneNumberId, phoneNumberId);
 	}
 }

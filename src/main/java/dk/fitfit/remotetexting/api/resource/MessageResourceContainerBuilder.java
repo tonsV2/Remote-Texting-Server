@@ -24,7 +24,9 @@ public class MessageResourceContainerBuilder implements Builder<MessageResourceC
 	@Override
 	public MessageResourceContainer build() {
 		MessageResourceContainer messageResourceContainer = new MessageResourceContainer(messages);
-		messageResourceContainer.add(links);
+		if(links != null) {
+			messageResourceContainer.add(links);
+		}
 		return messageResourceContainer;
 	}
 }

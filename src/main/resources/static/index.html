@@ -2,28 +2,67 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Demo</title>
+		<title>Remote Texting</title>
+		<style>
+			.from {
+				float: left;
+				width: 50%;
+			}
+			.to {
+				float: right;
+				width: 50%;
+			}
+		</style>
 	</head>
-	<body ng-app="app" ng-controller="home as home">
-		<h1>Demo</h1>
-		<div class="container" ng-show="!home.authenticated">
+	<body ng-app="app" ng-controller="home as vm">
+		<h1>Remote Texting</h1>
+		<a href="send.html">Send message</a>
+		<div class="container" ng-show="!vm.authenticated">
 			Login with: <a href="/login">Google</a>
 		</div>
-		<div class="container" ng-show="home.authenticated">
-			Logged in as: <span ng-bind="home.user"></span>
+		<div ng-show="vm.authenticated">
+			<ul>
+				<li ng-repeat="phoneNumber in vm.user.phoneNumbers" ng-click="vm.showMessages(phoneNumber)">{{phoneNumber.number}}</li>
+			</ul>
+			<hr />
+			<div style="width: 60%">
+				<div style="border: 1px solid black" ng-repeat="message in vm.messages" ng-class="{from: message.from, to: !message.from}">{{message.content}}</div>
+			</div>
 		</div>
+
 		<script type="text/javascript" src="/webjars/angularjs/angular.min.js"></script>
 		<script type="text/javascript">
 			angular.module("app", []).controller("home", function($http) {
-				var self = this;
+				var vm = this;
 				$http.get("/api/users").success(function(data) {
 					console.log(data);
-					self.user = data.email;
-					self.authenticated = true;
+					vm.user = data;
+					vm.authenticated = true;
+					vm.showMessages(vm.user.phoneNumbers[0]);
 				}).error(function() {
-					self.user = "N/A";
-					self.authenticated = false;
+					vm.user = "N/A";
+					vm.authenticated = false;
 				});
+
+				vm.showMessages = function (phoneNumber) {
+					flattenLinks(phoneNumber.links);
+					$http.get(phoneNumber.links['messages']).success(function(data) {
+						vm.messages = data.messages;
+						console.log(vm.messages[0]);
+					}).error(function() {
+					});
+				};
+
+				function flattenLinks(links) {
+					for (var key in links) {
+						var rel = links[key].rel || key;
+						var href = links[key].href;
+						if (href) {
+							links[href] = rel;  // TODO: Hu? Reversed... should be links[rel] = href
+						}
+					}
+				}
+
 			});
 		</script>
 	</body>

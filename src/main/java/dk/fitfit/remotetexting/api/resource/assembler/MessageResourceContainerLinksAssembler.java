@@ -1,5 +1,6 @@
 package dk.fitfit.remotetexting.api.resource.assembler;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import dk.fitfit.remotetexting.api.controller.MessageController;
 import dk.fitfit.remotetexting.business.domain.Message;
@@ -19,6 +20,8 @@ public class MessageResourceContainerLinksAssembler implements ResourceLinksAsse
 
 	@Override
 	public List<Link> getLinks(final Iterable<Message> entity) {
+		int size = Iterables.size(entity);
+		if(size < 1) return null;
 		Message message = entity.iterator().next();
 		try {
 			return Lists.newArrayList(new SelfLink(message), new PrototypeLink(), new SendMessageLink());

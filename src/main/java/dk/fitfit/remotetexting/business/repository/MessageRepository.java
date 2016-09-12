@@ -10,5 +10,5 @@ public interface MessageRepository extends CrudRepository<Message, Long> {
 //	@Query("select m.from, m.content from Message m where m.from = :phoneNumberId")
 //	Iterable<Message> findBy(long phoneNumberId);
 
-	Iterable<Message> findByFromId(long phoneNumberId);
+	Iterable<Message> findByFromIdOrToIdOrderById(long phoneNumberId, long phoneNumberTo);
 }
