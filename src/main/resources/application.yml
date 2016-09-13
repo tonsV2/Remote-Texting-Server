@@ -13,9 +13,10 @@ spring:
 #    password: skummet
 
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.0.3/remotetexting
-    username: tons
-    password:
+#    url: jdbc:postgresql://192.168.0.3/remotetexting
+    url: ${DATABASE_URL}
+#    username: tons
+#    password:
 
   jpa:
     show-sql: true
