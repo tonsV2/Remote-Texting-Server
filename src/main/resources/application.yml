@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: Remote Texting
+  datasource:
+#    driverClassName: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost/remotetexting?useSSL=false
+#    username: tons
+#    password:
+
+#    driverClassName: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://192.168.0.3/remotetexting?useSSL=false
+#    username: root
+#    password: skummet
+
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.0.3/remotetexting
+    username: tons
+    password:
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate.ddl-auto: update
+
+security:
+  oauth2:
+    client:
+      clientId: 591997811673-8d8ipbtgbodbkovou20a57gcprk6beoo.apps.googleusercontent.com
+      clientSecret: kO8UwJzZGiy6bXcKLxNKyTUJ
+      accessTokenUri: https://accounts.google.com/o/oauth2/token
+      userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+      tokenName: oauth_token
+      authenticationScheme: query
+      clientAuthenticationScheme: form
+      scope: email
+    resource:
+      userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+fcm:
+  api_url: https://fcm.googleapis.com/fcm/send
+  auth_key: AIzaSyArnGkDMg9fpPCAWktMxbI1PNejOb3ufTk
