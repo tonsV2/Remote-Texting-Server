@@ -13,19 +13,16 @@ spring:
 #    password: skummet
 
     driverClassName: org.postgresql.Driver
-#    url: jdbc:postgresql://192.168.0.3/remotetexting
-    url: ${DATABASE_URL}
-#    username: tons
-#    password:
+    url: jdbc:postgresql://192.168.0.3:5432/remotetexting
+#    url: ${DATABASE_URL}
+    username: tons
+    password: skummet
 
   jpa:
     show-sql: true
     generate-ddl: true
     hibernate.ddl-auto: update
-    spring.jpa.database-platform: org.hibernate.dialect.PostgreSQLDialect
-
-hibernate:
-  dialect: org.hibernate.dialect.PostgreSQL92Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 security:
   oauth2:
